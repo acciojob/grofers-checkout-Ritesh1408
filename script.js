@@ -8,18 +8,23 @@ getSumBtn.addEventListener("click", function () {
 
     // Calculate the total sum of all prices
     priceElements.forEach((item) => {
-        sum += parseFloat(item.textContent);
+        let priceValue = parseFloat(item.textContent.trim());
+
+        // Check if the parsed value is a number, otherwise default to 0
+        if (!isNaN(priceValue)) {
+            sum += priceValue;
+        }
     });
 
-    // Check if the total row already exists and remove it before adding a new one
-    const existingTotalRow = document.getElementById("totalRow");
+    // Remove existing total row if present
+    let existingTotalRow = document.getElementById("ans");
     if (existingTotalRow) {
         existingTotalRow.remove();
     }
 
     // Create a new row for the total price
     const totalRow = document.createElement("tr");
-    totalRow.id = "totalRow";  // Assign ID to prevent duplicates
+    totalRow.id = "ans";  // This ID is important for Cypress tests
 
     const totalCell = document.createElement("td");
     totalCell.setAttribute("colspan", "2"); // Span across both columns
